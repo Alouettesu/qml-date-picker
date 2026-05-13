@@ -157,9 +157,7 @@ cmake --build .
 ```
 README.md (Start here!)
 ├── GETTING_STARTED.md (Quick start)
-├── INSTALLATION.md (Detailed setup)
 ├── EXAMPLES.md (Code examples)
-├── FAQ.md (Common questions)
 ├── DEVELOPMENT.md (Development guide)
 ├── ARCHITECTURE.md (Technical details)
 ├── CONTRIBUTING.md (How to contribute)
@@ -198,17 +196,13 @@ DatePickerDemo/
 ├── .gitignore                      # Git ignore
 ├── README.md                       # Main readme
 ├── GETTING_STARTED.md              # Quick start
-├── INSTALLATION.md                 # Installation
 ├── EXAMPLES.md                     # Code examples
-├── FAQ.md                          # FAQ
 ├── DEVELOPMENT.md                  # Dev guide
 ├── ARCHITECTURE.md                 # Architecture
 ├── CONTRIBUTING.md                 # Contributing
 ├── CODE_OF_CONDUCT.md              # Code of conduct
-├── SECURITY.md                     # Security
 ├── CHANGELOG.md                    # Changelog
-├── LICENSE                         # MIT License
-└── package.json                    # Package info
+└── LICENSE                         # MIT License
 ```
 
 ## Key Components
@@ -274,10 +268,8 @@ Contributions are welcome! Please:
 ## Support
 
 - 📖 Read the documentation
-- ❓ Check [FAQ.md](FAQ.md)
 - 🐛 Report bugs via GitHub Issues
 - 💡 Suggest features via GitHub Issues
-- 💬 Discuss in GitHub Discussions
 
 ## License
 
@@ -291,9 +283,8 @@ This project is licensed under the MIT License - see [LICENSE](LICENSE) file for
 
 ## Contact & Community
 
-- **GitHub:** [yourusername/qml-date-picker-demo](https://github.com/Alouettesu/qml-date-picker.git)
+- **GitHub:** [Alouettesu/qml-date-picker](https://github.com/Alouettesu/qml-date-picker.git)
 - **Issues:** [GitHub Issues](https://github.com/Alouettesu/qml-date-picker/issues)
-- **Discussions:** [GitHub Discussions](https://github.com/Alouettesu/qml-date-picker/discussions)
 
 ## Related Resources
 
