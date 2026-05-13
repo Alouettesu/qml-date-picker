@@ -1,0 +1,38 @@
+# .editorconfig
+
+# EditorConfig helps maintain consistent coding styles for multiple developers
+# working on the same project across various editors and IDEs.
+# editorconfig.org
+
+root = true
+
+# All files
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+# QML files
+[*.qml]
+indent_style = space
+indent_size = 4
+
+# C++ files
+[*.{cpp,h,hpp}]
+indent_style = space
+indent_size = 4
+
+# CMake files
+[CMakeLists.txt]
+indent_style = space
+indent_size = 2
+
+# JSON files
+[*.json]
+indent_style = space
+indent_size = 2
+
+# Markdown files
+[*.md]
+trim_trailing_whitespace = false

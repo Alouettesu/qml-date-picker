@@ -1,4 +1,52 @@
+# Build directories
+build/
+cmake-build-debug/
+cmake-build-release/
+cmake-build-*/
+
+# Qt Creator
+*.pro.user
+*.pro.user.*
+*.qmlproject.user
+*.qmlproject.user.*
+*.qtds
+
 # IDE
 .vscode/
-CMakePresets.json
-*.qtds
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Compiled objects
+*.o
+*.obj
+*.a
+*.lib
+*.so
+*.dylib
+*.dll
+*.exe
+
+# CMake
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+Makefile
+*.cmake
+
+# Qt
+moc_*.cpp
+qrc_*.cpp
+ui_*.h
+*.moc
+
+# Dependencies
+.conan/
+conaninfo.txt
+conanbuildinfo.cmake
+
+# Temporary files
+*.tmp
+*.log

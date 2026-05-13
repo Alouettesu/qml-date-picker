@@ -1,0 +1,45 @@
+name: Build and Test
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        qt-version: ['6.8', '6.10']
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Install Qt
+      uses: jurplel/install-qt-action@v3
+      with:
+        version: ${{ matrix.qt-version }}
+        modules: 'qtquick3d'
+
+    - name: Create build directory
+      run: mkdir build
+
+    - name: Configure CMake
+      working-directory: build
+      run: cmake .. -DCMAKE_PREFIX_PATH=${{ env.Qt6_DIR }}
+
+    - name: Build
+      working-directory: build
+      run: cmake --build . --config Release
+
+    - name: Test
+      working-directory: build
+      run: |
+        if [ "$RUNNER_OS" == "Windows" ]; then
+          ./Release/DatePickerDebug.exe --help || true
+        else
+          ./DatePickerDebug --help || true
+        fi
+      shell: bash
