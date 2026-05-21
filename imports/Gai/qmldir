@@ -3,3 +3,4 @@ DatePicker 1.0 DatePicker.qml
 YearPicker 1.0 YearPicker.qml
 MonthPicker 1.0 MonthPicker.qml
 DayPicker 1.0 DayPicker.qml
+SpinningWheel 1.0 SpinningWheel.qml

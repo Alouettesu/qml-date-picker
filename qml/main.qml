@@ -11,6 +11,7 @@ Window {
     visible: true
     title: "DatePicker Demo"
     color: "#f0f0f0"
+    property font font: Qt.font({ family: "Arial", pixelSize: 20})
 
     function nextRange() {
         let rangeIndex = (datePicker1.dateIndex++) % 3
@@ -51,6 +52,321 @@ Window {
 
     ListModel { id: eventLog }
 
+    // ── Wheel 1  ───────────────────────────────────────────────
+    Component {
+        id: w1DefaultDelegate
+        Text {
+            anchors.centerIn: parent
+            text: modelData
+            font: root.font; color: "#222"
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
+        }
+    }
+    Component {
+        id: w1MinimalDelegate
+        Text {
+            anchors.centerIn: parent
+            text: modelData
+            font: root.font; color: "#555"
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
+        }
+    }
+    Component {
+        id: w1DarkDelegate
+        Text {
+            anchors.centerIn: parent
+            text: modelData
+            font: root.font; color: "#eee"
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
+        }
+    }
+    Component {
+        id: w1NeonDelegate
+        Text {
+            anchors.centerIn: parent
+            text: modelData
+            font: root.font; color: "#00ffcc"
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
+        }
+    }
+    Component {
+        id: w1RetroDelegate
+        Text {
+            anchors.centerIn: parent
+            text: modelData
+            font.family: "Courier"; font.pixelSize: root.font.pixelSize
+            color: "#3d2b00"
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
+        }
+    }
+
+    // ── Wheel 2  ────────────────────────────────────────────
+    Component {
+        id: w2DefaultDelegate
+        Text {
+            anchors.centerIn: parent
+            text: modelData
+            font: root.font; color: "#222"
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
+        }
+    }
+    Component {
+        id: w2MinimalDelegate
+        Text {
+            anchors.centerIn: parent
+            text: modelData
+            font: root.font; color: "#555"
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
+        }
+    }
+    Component {
+        id: w2DarkDelegate
+        Text {
+            anchors.centerIn: parent
+            text: modelData
+            font: root.font; color: "#eee"
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
+        }
+    }
+    Component {
+        id: w2NeonDelegate
+        Text {
+            anchors.centerIn: parent
+            text: modelData
+            font: root.font; color: "#00ffcc"
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
+        }
+    }
+    Component {
+        id: w2RetroDelegate
+        Text {
+            anchors.centerIn: parent
+            text: modelData
+            font.family: "Courier"; font.pixelSize: root.font.pixelSize
+            color: "#3d2b00"
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
+        }
+    }
+
+    // ── Wheel 3 ──────────────────────────────────────────────────────────────────
+    // ── Default ───────────────────────────────────────────────────────────────────
+    Component {
+        id: defaultDelegate
+        Item {
+            width: parent ? parent.width : 0
+            height: parent ? parent.height : 0
+            Row {
+                anchors.centerIn: parent
+                spacing: 6
+                Text { text: model.emoji; font.pixelSize: 18; verticalAlignment: Text.AlignVCenter }
+                Text { text: model.label; font: root.font; color: "#222"; verticalAlignment: Text.AlignVCenter }
+            }
+        }
+    }
+    Component {
+        id: defaultHighlight
+        Rectangle { color: "transparent"; border.color: "#409eff"; border.width: 1; radius: 6 }
+    }
+    Component {
+        id: defaultBackground
+        Item {}
+    }
+
+    // ── Minimal ───────────────────────────────────────────────────────────────────
+    Component {
+        id: minimalDelegate
+        Text {
+            anchors.centerIn: parent
+            text: model.label
+            font: root.font
+            color: "#555"
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
+        }
+    }
+    Component {
+        id: minimalHighlight
+        Item {
+            Rectangle {
+                anchors.left: parent.left; anchors.right: parent.right
+                anchors.leftMargin: 8;    anchors.rightMargin: 8
+                height: 1; color: "#bbb"
+                anchors.top: parent.top
+            }
+            Rectangle {
+                anchors.left: parent.left; anchors.right: parent.right
+                anchors.leftMargin: 8;    anchors.rightMargin: 8
+                height: 1; color: "#bbb"
+                anchors.bottom: parent.bottom
+            }
+        }
+    }
+    Component {
+        id: minimalBackground
+        Item {}
+    }
+
+    // ── Dark ──────────────────────────────────────────────────────────────────────
+    Component {
+        id: darkDelegate
+        Item {
+            width: parent ? parent.width : 0
+            height: parent ? parent.height : 0
+            Row {
+                anchors.centerIn: parent
+                spacing: 6
+                Text { text: model.emoji; font.pixelSize: 18; verticalAlignment: Text.AlignVCenter }
+                Text { text: model.label; font: root.font; color: "#eee"; verticalAlignment: Text.AlignVCenter }
+            }
+        }
+    }
+    Component {
+        id: darkHighlight
+        Rectangle { color: "#18ffffff"; border.color: "#44ffffff"; border.width: 1; radius: 6 }
+    }
+    Component {
+        id: darkBackground
+        Rectangle {
+            radius: 8
+            color: "#1e1e1e"
+            // Градиентные маски сверху и снизу
+            Rectangle {
+                anchors.top: parent.top; anchors.left: parent.left; anchors.right: parent.right
+                height: parent.height * 0.3
+                gradient: Gradient {
+                    GradientStop { position: 0.0; color: "#e01e1e1e" }
+                    GradientStop { position: 1.0; color: "#001e1e1e" }
+                }
+                z: 1
+            }
+            Rectangle {
+                anchors.bottom: parent.bottom; anchors.left: parent.left; anchors.right: parent.right
+                height: parent.height * 0.3
+                gradient: Gradient {
+                    GradientStop { position: 0.0; color: "#001e1e1e" }
+                    GradientStop { position: 1.0; color: "#e01e1e1e" }
+                }
+                z: 1
+            }
+        }
+    }
+
+    // ── Neon ──────────────────────────────────────────────────────────────────────
+    Component {
+        id: neonDelegate
+        Item {
+            width: parent ? parent.width : 0
+            height: parent ? parent.height : 0
+            Row {
+                anchors.centerIn: parent
+                spacing: 6
+                Text { text: model.emoji; font.pixelSize: 18; verticalAlignment: Text.AlignVCenter }
+                Text { text: model.label; font: root.font; color: "#00ffcc"; verticalAlignment: Text.AlignVCenter }
+            }
+        }
+    }
+
+    Component {
+        id: neonHighlight
+        Rectangle {
+            color: "#220d00ff"
+            border.color: "#00ffcc"
+            border.width: 1
+            radius: 6
+        }
+    }
+    Component {
+        id: neonBackground
+        Rectangle {
+            color: "#0a0a1a"
+            radius: 8
+            Rectangle {
+                anchors.top: parent.top; anchors.left: parent.left; anchors.right: parent.right
+                height: parent.height * 0.35
+                gradient: Gradient {
+                    GradientStop { position: 0.0; color: "#e00a0a1a" }
+                    GradientStop { position: 1.0; color: "#000a0a1a" }
+                }
+                z: 1
+            }
+            Rectangle {
+                anchors.bottom: parent.bottom; anchors.left: parent.left; anchors.right: parent.right
+                height: parent.height * 0.35
+                gradient: Gradient {
+                    GradientStop { position: 0.0; color: "#000a0a1a" }
+                    GradientStop { position: 1.0; color: "#e00a0a1a" }
+                }
+                z: 1
+            }
+        }
+    }
+
+    // ── Retro ─────────────────────────────────────────────────────────────────────
+    Component {
+        id: retroDelegate
+        Item {
+            width: parent ? parent.width : 0
+            height: parent ? parent.height : 0
+            Row {
+                anchors.centerIn: parent
+                spacing: 6
+                Text { text: model.emoji; font.pixelSize: 18; verticalAlignment: Text.AlignVCenter }
+                Text {
+                    text: model.label
+                    font.family: "Courier"; font.pixelSize: root.font.pixelSize
+                    color: "#3d2b00"
+                    verticalAlignment: Text.AlignVCenter
+                }
+            }
+        }
+    }
+    Component {
+        id: retroHighlight
+        Rectangle {
+            color: "#a0ffe0b2"
+            border.color: "#bf6c00"
+            border.width: 2
+            radius: 3
+        }
+    }
+    Component {
+        id: retroBackground
+        Rectangle {
+            color: "#fdf5e6"
+            radius: 4
+            border.color: "#d4a96a"
+            border.width: 1
+            Rectangle {
+                anchors.top: parent.top; anchors.left: parent.left; anchors.right: parent.right
+                height: parent.height * 0.3
+                gradient: Gradient {
+                    GradientStop { position: 0.0; color: "#fffdf5e6" }
+                    GradientStop { position: 1.0; color: "#00fdf5e6" }
+                }
+                z: 1
+            }
+            Rectangle {
+                anchors.bottom: parent.bottom; anchors.left: parent.left; anchors.right: parent.right
+                height: parent.height * 0.3
+                gradient: Gradient {
+                    GradientStop { position: 0.0; color: "#00fdf5e6" }
+                    GradientStop { position: 1.0; color: "#fffdf5e6" }
+                }
+                z: 1
+            }
+        }
+    }
+
     function appendEvent(source, signal, value) {
         eventLog.append({ text: "[" + source + "] " + signal + " → " + value })
         if (eventLog.count > 100)
@@ -69,9 +385,8 @@ Window {
             Layout.alignment: Qt.AlignHCenter
         }
 
-        // ── Test Case 1: DatePicker ───────────────────────────────────────────
         GroupBox {
-            title: "Test Case 1: DatePicker"
+            title: "DatePicker"
             Layout.fillWidth: true
             Layout.fillHeight: true
 
@@ -124,45 +439,128 @@ Window {
                             }
                         }
                     }
-
-                    ColumnLayout {
+                    GroupBox {
+                        title: "Spinning Wheel 1"
+                        Layout.fillWidth: true
                         Layout.fillHeight: true
-                        spacing: 10
 
-                        Text { text: "Selected Date:"; font.bold: true }
-                        Text {
-                            text: datePicker1.selectedDate.toLocaleDateString()
-                            font.pixelSize: 14
-                            color: "#0066cc"
-                        }
+                        ColumnLayout {
+                            anchors.fill: parent
+                            spacing: 8
 
-                        Text {
-                            text: {
-                                let d = datePicker1.selectedDate
-                                let b = datePicker1.dateRange.begin
-                                let e = datePicker1.dateRange.end
-                                let ok = d >= b && d <= e
-                                return ok ? "✓ Within range" : "✗ Out of range!"
+                            ComboBox {
+                                id: themePickerW1
+                                Layout.fillWidth: true
+                                model: ["Default", "Minimal", "Dark", "Neon", "Retro"]
                             }
-                            font.pixelSize: 11
-                            font.bold: true
-                            color: {
-                                let d = datePicker1.selectedDate
-                                let b = datePicker1.dateRange.begin
-                                let e = datePicker1.dateRange.end
-                                return d >= b && d <= e ? "#00aa00" : "#aa0000"
+
+                            SpinningWheel {
+                                id: wheel
+                                Layout.fillWidth: true
+                                Layout.fillHeight: true
+                                model: 10
+
+                                property var themes: [
+                                    { delegate: w1DefaultDelegate, highlight: defaultHighlight, background: defaultBackground },
+                                    { delegate: w1MinimalDelegate, highlight: minimalHighlight, background: minimalBackground },
+                                    { delegate: w1DarkDelegate,    highlight: darkHighlight,    background: darkBackground    },
+                                    { delegate: w1NeonDelegate,    highlight: neonHighlight,    background: neonBackground    },
+                                    { delegate: w1RetroDelegate,   highlight: retroHighlight,   background: retroBackground   }
+                                ]
+
+                                delegate:   themes[themePickerW1.currentIndex].delegate
+                                highlight:  themes[themePickerW1.currentIndex].highlight
+                                background: themes[themePickerW1.currentIndex].background
                             }
                         }
+                    }
 
-                        Item { Layout.fillHeight: true }
+                    GroupBox {
+                        title: "Spinning Wheel 2"
+                        Layout.fillWidth: true
+                        Layout.fillHeight: true
+
+                        ColumnLayout {
+                            anchors.fill: parent
+                            spacing: 8
+
+                            ComboBox {
+                                id: themePickerW2
+                                Layout.fillWidth: true
+                                model: ["Default", "Minimal", "Dark", "Neon", "Retro"]
+                            }
+
+                            SpinningWheel {
+                                id: wheel1
+                                Layout.fillWidth: true
+                                Layout.fillHeight: true
+                                model: ["Apples", "Pears", "Bananas", "Peaches", "Grapes", "Watermelon"]
+
+                                property var themes: [
+                                    { delegate: w2DefaultDelegate, highlight: defaultHighlight, background: defaultBackground },
+                                    { delegate: w2MinimalDelegate, highlight: minimalHighlight, background: minimalBackground },
+                                    { delegate: w2DarkDelegate,    highlight: darkHighlight,    background: darkBackground    },
+                                    { delegate: w2NeonDelegate,    highlight: neonHighlight,    background: neonBackground    },
+                                    { delegate: w2RetroDelegate,   highlight: retroHighlight,   background: retroBackground   }
+                                ]
+
+                                delegate:   themes[themePickerW2.currentIndex].delegate
+                                highlight:  themes[themePickerW2.currentIndex].highlight
+                                background: themes[themePickerW2.currentIndex].background
+                            }
+                        }
+                    }
+
+                    GroupBox {
+                        title: "Spinning Wheel 3 — Custom"
+                        Layout.fillWidth: true
+                        Layout.fillHeight: true
+
+                        ColumnLayout {
+                            anchors.fill: parent
+                            spacing: 8
+
+                            ComboBox {
+                                id: themePicker
+                                Layout.fillWidth: true
+                                model: ["Default", "Minimal", "Dark", "Neon", "Retro"]
+                            }
+
+                            SpinningWheel {
+                                id: wheel2
+                                Layout.fillWidth: true
+                                Layout.fillHeight: true
+
+                                model: ListModel {
+                                    ListElement { emoji: "🍎"; label: "Apple"  }
+                                    ListElement { emoji: "🍐"; label: "Pear"   }
+                                    ListElement { emoji: "🍌"; label: "Banana" }
+                                    ListElement { emoji: "🍑"; label: "Peach"  }
+                                    ListElement { emoji: "🍇"; label: "Grapes" }
+                                    ListElement { emoji: "🍓"; label: "Berry"  }
+                                }
+
+                                property var themes: [
+                                    { delegate: defaultDelegate, highlight: defaultHighlight, background: defaultBackground },
+                                    { delegate: minimalDelegate, highlight: minimalHighlight, background: minimalBackground },
+                                    { delegate: darkDelegate,    highlight: darkHighlight,    background: darkBackground    },
+                                    { delegate: neonDelegate,    highlight: neonHighlight,    background: neonBackground    },
+                                    { delegate: retroDelegate,   highlight: retroHighlight,   background: retroBackground   }
+                                ]
+
+                                delegate:   themes[themePicker.currentIndex].delegate
+                                highlight:  themes[themePicker.currentIndex].highlight
+                                background: themes[themePicker.currentIndex].background
+                            }
+                        }
                     }
                 }
             }
         }
 
-        // ── Test Case 2: MonthPicker ──────────────────────────────────────────
+        // ── MonthPicker ──────────────────────────────────────────
         GroupBox {
-            title: "Test Case 2: MonthPicker"
+            title: "MonthPicker"
             Layout.fillWidth: true
             Layout.fillHeight: true
 
@@ -249,7 +647,6 @@ Window {
                         Item { Layout.fillHeight: true }
                     }
 
-                    // ── Общий лог событий ─────────────────────────────────────
                     ColumnLayout {
                         Layout.fillHeight: true
                         spacing: 6

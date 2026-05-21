@@ -13,6 +13,7 @@ qt6_add_qml_module(Gai
 		DatePicker.qml
 		DayPicker.qml
 		MonthPicker.qml
+		SpinningWheel.qml
 		YearPicker.qml
 
 )
