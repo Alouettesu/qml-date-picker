@@ -13,6 +13,18 @@ Item {
     property var locale: Qt.locale()
     property font font
 
+    property Component delegate: null
+    property Component background: null
+
+    property Component highlight: null
+    property Component highlightYear:  null
+    property Component highlightMonth: null
+    property Component highlightDay:   null
+
+    readonly property Component _highlightYear:  highlightYear  !== null ? highlightYear  : highlight
+    readonly property Component _highlightMonth: highlightMonth !== null ? highlightMonth : highlight
+    readonly property Component _highlightDay:   highlightDay   !== null ? highlightDay   : highlight
+
     implicitWidth: yearPicker.implicitWidth + monthPicker.implicitWidth + dayPicker.implicitWidth
     implicitHeight: 320
 
@@ -150,6 +162,9 @@ Item {
             anchors.bottom: parent.bottom
             font: datePicker.font
             locale: datePicker.locale
+            highlight:  datePicker._highlightYear  !== null ? datePicker._highlightYear  : null
+            background: datePicker.background      ?? undefined
+            delegate:   datePicker.delegate        ?? undefined
             onActivated: {
                 datePicker._userChanging = true
                 datePicker._updatePickerRanges()
@@ -164,6 +179,9 @@ Item {
             anchors.bottom: parent.bottom
             font: datePicker.font
             locale: datePicker.locale
+            highlight:  datePicker._highlightMonth !== null ? datePicker._highlightMonth : null
+            background: datePicker.background      ?? undefined
+            delegate:   datePicker.delegate        ?? undefined
             onActivated: {
                 datePicker._userChanging = true
                 datePicker._updatePickerRanges()
@@ -178,6 +196,9 @@ Item {
             anchors.bottom: parent.bottom
             font: datePicker.font
             locale: datePicker.locale
+            highlight:  datePicker._highlightDay   !== null ? datePicker._highlightDay : null
+            background: datePicker.background      ?? undefined
+            delegate:   datePicker.delegate        ?? undefined
             onActivated: {
                 datePicker._userChanging = true
                 datePicker._commitFromPickers()

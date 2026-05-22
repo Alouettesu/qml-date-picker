@@ -22,11 +22,16 @@ Item {
         color: "#000000"
     }
 
-    property Component highlight: Rectangle {
-        color: "transparent"
-        border.color: "#409eff"
-        border.width: 1
-        radius: 6
+    property Component highlight: null
+
+    Component {
+        id: defaultHighlightComponent
+        Rectangle {
+            color: "transparent"
+            border.color: "#409eff"
+            border.width: 1
+            radius: 6
+        }
     }
 
     property Component background: Item {}
@@ -62,11 +67,9 @@ Item {
     }
 
     function _setByUser(index) {
-        _modelChanging = true
         _userChanging = true
         listView.currentIndex = index
         currentIndex = index
-        _modelChanging = false
         _userChanging = false
     }
 
@@ -114,7 +117,7 @@ Item {
         highlight: Loader {
             width: listView.width
             height: root.itemHeight
-            sourceComponent: root.highlight
+            sourceComponent: root.highlight !== null ? root.highlight : defaultHighlightComponent
         }
 
         onCurrentIndexChanged: {

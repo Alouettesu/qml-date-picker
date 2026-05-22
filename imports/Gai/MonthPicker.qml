@@ -16,8 +16,14 @@ Item {
         return local_width * 2
     }
 
-    onFontChanged: implicitWidth = calcMonthWidth()
-    onLocaleChanged: implicitWidth = calcMonthWidth()
+    onFontChanged: {
+        implicitWidth = calcMonthWidth()
+        if (_initialized) _rebuildModel()
+    }
+    onLocaleChanged: {
+        implicitWidth = calcMonthWidth()
+        if (_initialized) _rebuildModel()
+    }
 
     implicitHeight: 250
 
@@ -28,8 +34,32 @@ Item {
     property var locale: Qt.locale()
     property font font
 
-    readonly property int itemHeight: fontMetrics.height + 8
-    readonly property int itemsVisible: height / itemHeight
+    property Component delegate: Text {
+        anchors.centerIn: parent
+        text: modelData
+        font: root.font
+        horizontalAlignment: Text.AlignHCenter
+        verticalAlignment: Text.AlignVCenter
+        color: "#000000"
+    }
+
+    property Component highlight: null
+    property Component background: null
+
+    Component {
+        id: _defaultHighlight
+        Rectangle {
+            color: "transparent"
+            border.color: "#409eff"
+            border.width: 1
+            radius: 6
+        }
+    }
+
+    Component {
+        id: _defaultBackground
+        Item {}
+    }
 
     property bool _initialized: false
     property bool _modelChanging: false
@@ -42,18 +72,11 @@ Item {
         return Math.max(fromMonth, Math.min(toMonth, value))
     }
 
-    function _scheduleSync() {
-        Qt.callLater(_doSync)
-    }
-
-    function _doSync() {
-        _modelChanging = true
-        let target = _clamp(currentMonth)
-        if (currentMonth !== target)
-            currentMonth = target
-        listView.currentIndex = target - fromMonth
-        listView.positionViewAtIndex(listView.currentIndex, ListView.Center)
-        _modelChanging = false
+    function _rebuildModel() {
+        let months = []
+        for (let i = range.from; i <= range.to; i++)
+            months.push(root.locale.standaloneMonthName(i, Locale.LongFormat))
+        wheel.model = months
     }
 
     function _validateRange(r) {
@@ -94,19 +117,13 @@ Item {
             return
         }
         _lastValidRange = r
+        _rebuildModel()
+        let target = _clamp(currentMonth)
         _modelChanging = true
-        listView.model = r.to - r.from + 1
+        if (currentMonth !== target)
+            currentMonth = target
+        wheel.currentIndex = target - r.from
         _modelChanging = false
-        _scheduleSync()
-    }
-
-    function _setByUser(index) {
-        _modelChanging = true
-        _userChanging = true
-        listView.currentIndex = index
-        currentMonth = fromMonth + index
-        _modelChanging = false
-        _userChanging = false
     }
 
     Component.onCompleted: {
@@ -116,10 +133,16 @@ Item {
 
     onCurrentMonthChanged: {
         if (!_initialized || _modelChanging) return
-        if (_userChanging)
+        if (_userChanging) {
             activated(currentMonth)
-        else
-            _scheduleSync()
+        } else {
+            let target = _clamp(currentMonth)
+            _modelChanging = true
+            if (currentMonth !== target)
+                currentMonth = target
+            wheel.currentIndex = target - fromMonth
+            _modelChanging = false
+        }
     }
 
     onRangeChanged: {
@@ -132,61 +155,19 @@ Item {
         font: root.font
     }
 
-    ListView {
-        id: listView
+    SpinningWheel {
+        id: wheel
         anchors.fill: parent
-        clip: true
-        orientation: ListView.Vertical
-        snapMode: ListView.SnapOneItem
-        highlightRangeMode: ListView.StrictlyEnforceRange
-        boundsBehavior: Flickable.StopAtBounds
-        preferredHighlightBegin: height / 2 - root.itemHeight / 2
-        preferredHighlightEnd:   height / 2 + root.itemHeight / 2
+        font: root.font
+        locale: root.locale
+        delegate: root.delegate
+        highlight: root.highlight !== null ? root.highlight : _defaultHighlight
+        background: root.background != null ? root.background : _defaultBackground
 
-        onCurrentIndexChanged: {
-            if (!root._initialized || root._modelChanging) return
+        onActivated: (index) => {
             root._userChanging = true
-            root.currentMonth = root.fromMonth + currentIndex
+            root.currentMonth = root.fromMonth + index
             root._userChanging = false
-        }
-
-        delegate: Item {
-            width: ListView.view.width
-            height: root.itemHeight
-
-            Text {
-                anchors.centerIn: parent
-                text: root.locale.standaloneMonthName(index + root.fromMonth, Locale.LongFormat)
-                font: root.font
-
-                readonly property real distance: Math.abs(index - (root.currentMonth - root.fromMonth))
-                readonly property real t: Math.max(0, 1 - distance / (root.itemsVisible / 2))
-
-                opacity: 0.2 + 0.8 * t
-                scale: 0.6 + 0.4 * t
-            }
-
-            MouseArea {
-                anchors.fill: parent
-                onClicked: root._setByUser(index)
-                onWheel: (event) => {
-                    if (event.angleDelta.y > 0) {
-                        listView.decrementCurrentIndex()
-                    }
-                    else {
-                        listView.incrementCurrentIndex()
-                    }
-                }
-            }
-        }
-
-        highlight: Rectangle {
-            width: listView.width
-            height: root.itemHeight
-            y: listView.preferredHighlightBegin
-            color: "transparent"
-            border.color: "#409eff"
-            radius: 6
         }
     }
 }

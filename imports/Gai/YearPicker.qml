@@ -15,8 +15,32 @@ Item {
     property font font
     property var locale: Qt.locale()
 
-    readonly property int itemHeight: fontMetrics.height + 8
-    readonly property int itemsVisible: height / itemHeight
+    property Component delegate: Text {
+        anchors.centerIn: parent
+        text: modelData
+        font: root.font
+        horizontalAlignment: Text.AlignHCenter
+        verticalAlignment: Text.AlignVCenter
+        color: "#000000"
+    }
+
+    property Component highlight: null
+    property Component background: null
+
+    Component {
+        id: _defaultHighlight
+        Rectangle {
+            color: "transparent"
+            border.color: "#409eff"
+            border.width: 1
+            radius: 6
+        }
+    }
+
+    Component {
+        id: _defaultBackground
+        Item {}
+    }
 
     property bool _initialized: false
     property bool _modelChanging: false
@@ -27,20 +51,6 @@ Item {
 
     function _clamp(value) {
         return Math.max(fromYear, Math.min(toYear, value))
-    }
-
-    function _scheduleSync() {
-        Qt.callLater(_doSync)
-    }
-
-    function _doSync() {
-        _modelChanging = true
-        let target = _clamp(currentYear)
-        if (currentYear !== target)
-            currentYear = target
-        listView.currentIndex = target - fromYear
-        listView.positionViewAtIndex(listView.currentIndex, ListView.Center)
-        _modelChanging = false
     }
 
     function _validateRange(r) {
@@ -77,19 +87,16 @@ Item {
             return
         }
         _lastValidRange = r
+        let years = []
+        for (let y = r.from; y <= r.to; y++)
+            years.push(y)
+        wheel.model = years
+        let target = _clamp(currentYear)
         _modelChanging = true
-        listView.model = r.to - r.from + 1
+        if (currentYear !== target)
+            currentYear = target
+        wheel.currentIndex = target - r.from
         _modelChanging = false
-        _scheduleSync()
-    }
-
-    function _setByUser(index) {
-        _modelChanging = true
-        _userChanging = true
-        listView.currentIndex = index
-        currentYear = fromYear + index
-        _modelChanging = false
-        _userChanging = false
     }
 
     Component.onCompleted: {
@@ -99,10 +106,16 @@ Item {
 
     onCurrentYearChanged: {
         if (!_initialized || _modelChanging) return
-        if (_userChanging)
+        if (_userChanging) {
             activated(currentYear)
-        else
-            _scheduleSync()
+        } else {
+            let target = _clamp(currentYear)
+            _modelChanging = true
+            if (currentYear !== target)
+                currentYear = target
+            wheel.currentIndex = target - fromYear
+            _modelChanging = false
+        }
     }
 
     onRangeChanged: {
@@ -115,63 +128,19 @@ Item {
         font: root.font
     }
 
-    ListView {
-        id: listView
+    SpinningWheel {
+        id: wheel
         anchors.fill: parent
-        clip: true
-        orientation: ListView.Vertical
-        snapMode: ListView.SnapOneItem
-        highlightRangeMode: ListView.StrictlyEnforceRange
-        boundsBehavior: Flickable.StopAtBounds
-        preferredHighlightBegin: height / 2 - root.itemHeight / 2
-        preferredHighlightEnd:   height / 2 + root.itemHeight / 2
+        font: root.font
+        locale: root.locale
+        delegate: root.delegate
+        highlight: root.highlight !== null ? root.highlight : _defaultHighlight
+        background: root.background != null ? root.background : _defaultBackground
 
-        onCurrentIndexChanged: {
-            if (!root._initialized || root._modelChanging) return
+        onActivated: (index) => {
             root._userChanging = true
-            root.currentYear = root.fromYear + currentIndex
+            root.currentYear = root.fromYear + index
             root._userChanging = false
-        }
-
-        delegate: Item {
-            width: ListView.view.width
-            height: root.itemHeight
-
-            Text {
-                anchors.centerIn: parent
-                text: root.fromYear + index
-                font: root.font
-
-                readonly property real distance: Math.abs(index - (root.currentYear - root.fromYear))
-                readonly property real t: Math.max(0, 1 - distance / (root.itemsVisible / 2))
-
-                opacity: 0.2 + 0.8 * t
-                scale: 0.6 + 0.4 * t
-            }
-
-            MouseArea {
-                anchors.fill: parent
-                onClicked: {
-                    root._setByUser(index)
-                }
-                onWheel: (event) => {
-                    if (event.angleDelta.y > 0) {
-                        listView.decrementCurrentIndex()
-                    }
-                    else {
-                        listView.incrementCurrentIndex()
-                    }
-                }
-            }
-        }
-
-        highlight: Rectangle {
-            width: listView.width
-            height: root.itemHeight
-            y: listView.preferredHighlightBegin
-            color: "transparent"
-            border.color: "#409eff"
-            radius: 6
         }
     }
 }
