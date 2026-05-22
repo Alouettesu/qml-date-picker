@@ -22,6 +22,28 @@ Window {
 }
 ```
 
+## Basic SpinningWheel
+
+The simplest way to use the SpinningWheel component:
+
+```qml
+import QtQuick
+import QtQuick.Window
+import Gai
+
+Window {
+    width: 300
+    height: 400
+    visible: true
+    title: "Simple Spinning Wheel"
+
+    SpinningWheel {
+        anchors.centerIn: parent
+        model: ["Option 1", "Option 2", "Option 3", "Option 4", "Option 5"]
+    }
+}
+```
+
 ## Date Picker with Custom Range
 
 Set a specific date range for selection:
@@ -82,6 +104,298 @@ Window {
             id: selectedDateText
             text: "Selected: " + datePicker.selectedDate.toLocaleDateString()
             font.pixelSize: 16
+        }
+    }
+}
+```
+
+## SpinningWheel with Custom Delegate
+
+Create a custom delegate for rendering items:
+
+```qml
+import QtQuick
+import QtQuick.Window
+import Gai
+
+Window {
+    width: 300
+    height: 400
+    visible: true
+    title: "Custom Delegate"
+
+    SpinningWheel {
+        anchors.centerIn: parent
+        model: ["Apple", "Banana", "Cherry", "Date", "Elderberry"]
+        
+        delegate: Text {
+            anchors.centerIn: parent
+            text: modelData
+            font.pixelSize: 18
+            color: "#0066cc"
+            font.bold: true
+            horizontalAlignment: Text.AlignHCenter
+        }
+    }
+}
+```
+
+## SpinningWheel with Emoji Delegate
+
+Use emoji in custom delegates:
+
+```qml
+import QtQuick
+import QtQuick.Window
+import Gai
+
+Window {
+    width: 300
+    height: 400
+    visible: true
+    title: "Emoji Delegate"
+
+    SpinningWheel {
+        anchors.centerIn: parent
+        model: ListModel {
+            ListElement { emoji: "🍎"; label: "Apple"  }
+            ListElement { emoji: "🍌"; label: "Banana" }
+            ListElement { emoji: "🍒"; label: "Cherry" }
+            ListElement { emoji: "📅"; label: "Date"   }
+            ListElement { emoji: "🫐"; label: "Berry"  }
+        }
+        
+        delegate: Row {
+            anchors.centerIn: parent
+            spacing: 8
+            
+            Text {
+                text: model.emoji
+                font.pixelSize: 24
+                verticalAlignment: Text.AlignVCenter
+            }
+            
+            Text {
+                text: model.label
+                font.pixelSize: 16
+                color: "#333"
+                verticalAlignment: Text.AlignVCenter
+            }
+        }
+    }
+}
+```
+
+## SpinningWheel with Custom Background
+
+Add a custom background with gradient:
+
+```qml
+import QtQuick
+import QtQuick.Window
+import Gai
+
+Window {
+    width: 300
+    height: 400
+    visible: true
+    title: "Custom Background"
+
+    SpinningWheel {
+        anchors.centerIn: parent
+        model: 10
+        
+        background: Rectangle {
+            color: "#f5f5f5"
+            border.color: "#ddd"
+            border.width: 1
+            radius: 8
+            
+            // Top gradient fade
+            Rectangle {
+                anchors { top: parent.top; left: parent.left; right: parent.right }
+                height: parent.height * 0.3
+                gradient: Gradient {
+                    GradientStop { position: 0.0; color: "#ffffff" }
+                    GradientStop { position: 1.0; color: "#00ffffff" }
+                }
+                z: 1
+            }
+            
+            // Bottom gradient fade
+            Rectangle {
+                anchors { bottom: parent.bottom; left: parent.left; right: parent.right }
+                height: parent.height * 0.3
+                gradient: Gradient {
+                    GradientStop { position: 0.0; color: "#00ffffff" }
+                    GradientStop { position: 1.0; color: "#ffffff" }
+                }
+                z: 1
+            }
+        }
+    }
+}
+```
+
+## SpinningWheel with Dark Background
+
+Create a dark theme background:
+
+```qml
+import QtQuick
+import QtQuick.Window
+import Gai
+
+Window {
+    width: 300
+    height: 400
+    visible: true
+    title: "Dark Background"
+    color: "#1a1a1a"
+
+    SpinningWheel {
+        anchors.centerIn: parent
+        model: ["Dark", "Mode", "Theme", "Example"]
+        
+        delegate: Text {
+            anchors.centerIn: parent
+            text: modelData
+            font.pixelSize: 18
+            color: "#00ffcc"
+            font.bold: true
+        }
+        
+        background: Rectangle {
+            color: "#1e1e1e"
+            border.color: "#333"
+            border.width: 1
+            radius: 8
+            
+            Rectangle {
+                anchors { top: parent.top; left: parent.left; right: parent.right }
+                height: parent.height * 0.3
+                gradient: Gradient {
+                    GradientStop { position: 0.0; color: "#e01e1e1e" }
+                    GradientStop { position: 1.0; color: "#001e1e1e" }
+                }
+                z: 1
+            }
+            
+            Rectangle {
+                anchors { bottom: parent.bottom; left: parent.left; right: parent.right }
+                height: parent.height * 0.3
+                gradient: Gradient {
+                    GradientStop { position: 0.0; color: "#001e1e1e" }
+                    GradientStop { position: 1.0; color: "#e01e1e1e" }
+                }
+                z: 1
+            }
+        }
+    }
+}
+```
+
+## SpinningWheel with Custom Highlight
+
+Create a custom highlight component:
+
+```qml
+import QtQuick
+import QtQuick.Window
+import Gai
+
+Window {
+    width: 300
+    height: 400
+    visible: true
+    title: "Custom Highlight"
+
+    SpinningWheel {
+        anchors.centerIn: parent
+        model: ["Red", "Green", "Blue", "Yellow", "Purple"]
+        
+        highlight: Rectangle {
+            color: "#e8f4f8"
+            border.color: "#00bcd4"
+            border.width: 2
+            radius: 8
+        }
+    }
+}
+```
+
+## SpinningWheel with Neon Highlight
+
+Create a neon-style highlight:
+
+```qml
+import QtQuick
+import QtQuick.Window
+import Gai
+
+Window {
+    width: 300
+    height: 400
+    visible: true
+    title: "Neon Highlight"
+    color: "#0a0a1a"
+
+    SpinningWheel {
+        anchors.centerIn: parent
+        model: ["Neon", "Glow", "Effect", "Style"]
+        
+        delegate: Text {
+            anchors.centerIn: parent
+            text: modelData
+            font.pixelSize: 18
+            color: "#00ffcc"
+            font.bold: true
+        }
+        
+        highlight: Rectangle {
+            color: "#1100ffcc"
+            border.color: "#00ffcc"
+            border.width: 1
+            radius: 6
+        }
+    }
+}
+```
+
+## SpinningWheel with Retro Highlight
+
+Create a retro-style highlight:
+
+```qml
+import QtQuick
+import QtQuick.Window
+import Gai
+
+Window {
+    width: 300
+    height: 400
+    visible: true
+    title: "Retro Highlight"
+    color: "#fdf5e6"
+
+    SpinningWheel {
+        anchors.centerIn: parent
+        model: ["Retro", "Vintage", "Classic", "Style"]
+        
+        delegate: Text {
+            anchors.centerIn: parent
+            text: modelData
+            font.pixelSize: 18
+            color: "#3d2b00"
+            font.family: "Courier"
+            font.bold: true
+        }
+        
+        highlight: Rectangle {
+            color: "#a0ffe0b2"
+            border.color: "#bf6c00"
+            border.width: 2
+            radius: 3
         }
     }
 }
@@ -322,9 +636,161 @@ Window {
 }
 ```
 
-## Date Picker with Custom Styling
+## DatePicker with Custom Delegate
 
-Customize appearance:
+Customize the appearance of date picker items:
+
+```qml
+import QtQuick
+import QtQuick.Window
+import Gai
+
+Window {
+    width: 400
+    height: 500
+    visible: true
+    title: "DatePicker with Custom Delegate"
+
+    DatePicker {
+        anchors.centerIn: parent
+        
+        selectedDate: new Date(2026, 5, 15)
+        dateRange: {
+            begin: new Date(2020, 0, 1),
+            end: new Date(2030, 11, 31)
+        }
+        
+        delegate: Text {
+            anchors.centerIn: parent
+            text: modelData
+            font.pixelSize: 20
+            color: "#1a1a1a"
+            font.bold: true
+            horizontalAlignment: Text.AlignHCenter
+        }
+    }
+}
+```
+
+## DatePicker with Custom Background
+
+Add a custom background to the date picker:
+
+```qml
+import QtQuick
+import QtQuick.Window
+import Gai
+
+Window {
+    width: 400
+    height: 500
+    visible: true
+    title: "DatePicker with Custom Background"
+
+    DatePicker {
+        anchors.centerIn: parent
+        
+        selectedDate: new Date(2026, 5, 15)
+        dateRange: {
+            begin: new Date(2020, 0, 1),
+            end: new Date(2030, 11, 31)
+        }
+        
+        background: Rectangle {
+            color: "#fafafa"
+            border.color: "#e0e0e0"
+            border.width: 1
+            radius: 8
+        }
+    }
+}
+```
+
+## DatePicker with Custom Highlight
+
+Customize the highlight component:
+
+```qml
+import QtQuick
+import QtQuick.Window
+import Gai
+
+Window {
+    width: 400
+    height: 500
+    visible: true
+    title: "DatePicker with Custom Highlight"
+
+    DatePicker {
+        anchors.centerIn: parent
+        
+        selectedDate: new Date(2026, 5, 15)
+        dateRange: {
+            begin: new Date(2020, 0, 1),
+            end: new Date(2030, 11, 31)
+        }
+        
+        highlight: Rectangle {
+            color: "#fff3e0"
+            border.color: "#ff9800"
+            border.width: 2
+            radius: 6
+        }
+    }
+}
+```
+
+## DatePicker with Per-Picker Highlights
+
+Use different highlights for year, month, and day pickers:
+
+```qml
+import QtQuick
+import QtQuick.Window
+import Gai
+
+Window {
+    width: 400
+    height: 500
+    visible: true
+    title: "DatePicker with Per-Picker Highlights"
+
+    DatePicker {
+        anchors.centerIn: parent
+        
+        selectedDate: new Date(2026, 5, 15)
+        dateRange: {
+            begin: new Date(2020, 0, 1),
+            end: new Date(2030, 11, 31)
+        }
+        
+        highlightYear: Rectangle {
+            color: "#e3f2fd"
+            border.color: "#1976d2"
+            border.width: 2
+            radius: 6
+        }
+        
+        highlightMonth: Rectangle {
+            color: "#f3e5f5"
+            border.color: "#7b1fa2"
+            border.width: 2
+            radius: 6
+        }
+        
+        highlightDay: Rectangle {
+            color: "#e8f5e9"
+            border.color: "#388e3c"
+            border.width: 2
+            radius: 6
+        }
+    }
+}
+```
+
+## DatePicker with Styled Delegate and Background
+
+Combine custom delegate and background:
 
 ```qml
 import QtQuick
@@ -346,16 +812,33 @@ Window {
             end: new Date(2030, 11, 31)
         }
         
-        font {
-            family: "Arial"
-            pixelSize: 18
-            bold: true
+        delegate: Text {
+            anchors.centerIn: parent
+            text: modelData
+            font.pixelSize: 18
+            color: "#0066cc"
+            font.bold: true
+            horizontalAlignment: Text.AlignHCenter
+        }
+        
+        background: Rectangle {
+            color: "#f0f8ff"
+            border.color: "#4da6ff"
+            border.width: 1
+            radius: 6
+        }
+        
+        highlight: Rectangle {
+            color: "#cce5ff"
+            border.color: "#0066cc"
+            border.width: 2
+            radius: 6
         }
     }
 }
 ```
 
-## Date Picker in Dialog
+## DatePicker in Dialog
 
 Use date picker in a dialog:
 
@@ -513,6 +996,60 @@ Window {
 }
 ```
 
+## SpinningWheel with Complex Model
+
+Use a ListModel with multiple properties:
+
+```qml
+import QtQuick
+import QtQuick.Window
+import Gai
+
+Window {
+    width: 300
+    height: 400
+    visible: true
+    title: "Complex Model"
+
+    SpinningWheel {
+        anchors.centerIn: parent
+        model: ListModel {
+            ListElement { name: "Item 1"; value: 100; color: "#ff6b6b" }
+            ListElement { name: "Item 2"; value: 200; color: "#4ecdc4" }
+            ListElement { name: "Item 3"; value: 300; color: "#45b7d1" }
+            ListElement { name: "Item 4"; value: 400; color: "#f7b731" }
+        }
+        
+        delegate: Column {
+            anchors.centerIn: parent
+            spacing: 4
+            
+            Rectangle {
+                width: 40
+                height: 40
+                radius: 20
+                color: model.color
+                anchors.horizontalCenter: parent.horizontalCenter
+            }
+            
+            Text {
+                text: model.name
+                font.pixelSize: 14
+                color: "#333"
+                anchors.horizontalCenter: parent.horizontalCenter
+            }
+            
+            Text {
+                text: "Value: " + model.value
+                font.pixelSize: 12
+                color: "#999"
+                anchors.horizontalCenter: parent.horizontalCenter
+            }
+        }
+    }
+}
+```
+
 ## Tips and Best Practices
 
 ### 1. Always Set Valid Date Ranges
@@ -572,4 +1109,63 @@ datePicker.locale: Qt.locale()
 
 // Or specify custom locale
 datePicker.locale: Qt.locale("fr_FR")
+```
+
+### 6. Customize Components Consistently
+
+```qml
+// Define theme components once
+Component {
+    id: customHighlight
+    Rectangle {
+        color: "#e3f2fd"
+        border.color: "#1976d2"
+        border.width: 2
+        radius: 8
+    }
+}
+
+// Reuse across multiple pickers
+DatePicker {
+    highlight: customHighlight
+    highlightYear: customHighlight
+    highlightMonth: customHighlight
+    highlightDay: customHighlight
+}
+```
+
+### 7. Use Gradients for Professional Backgrounds
+
+```qml
+background: Rectangle {
+    color: "#ffffff"
+    
+    Rectangle {
+        anchors { top: parent.top; left: parent.left; right: parent.right }
+        height: parent.height * 0.3
+        gradient: Gradient {
+            GradientStop { position: 0.0; color: "#ffffff" }
+            GradientStop { position: 1.0; color: "#00ffffff" }
+        }
+        z: 1
+    }
+}
+```
+
+### 8. Create Reusable Custom Delegates
+
+```qml
+component CustomTextDelegate: Text {
+    anchors.centerIn: parent
+    text: modelData
+    font.pixelSize: 18
+    color: "#0066cc"
+    font.bold: true
+    horizontalAlignment: Text.AlignHCenter
+}
+
+// Use in multiple places
+SpinningWheel {
+    delegate: CustomTextDelegate {}
+}
 ```
