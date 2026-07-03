@@ -1,5 +1,7 @@
 <RCC>
     <qresource prefix="/">
         <file>qml/main.qml</file>
+        <file>qml/neon.qml</file>
+        <file>qml/themes-demo.qml</file>
     </qresource>
 </RCC>

@@ -2,6 +2,8 @@
 
 A demonstration project showcasing a mobile-style date picker component in QML with scrollable year, month, and day selectors, built on the flexible SpinningWheel component.
 
+Please look at the [blog post](https://alouettesu.github.io/gai/date-picker/qml/2026/07/01/QML-Date-Picker.html) about this component.
+
 ## Overview
 
 This project implements a reusable date picker component (`DatePicker`) with individual picker components for year, month, and day selection. All components are built on the foundation of the `SpinningWheel` - a highly customizable spinning wheel component that supports custom delegates, backgrounds, and highlights. The component features smooth scrolling interactions similar to those found on mobile platforms (iOS, Android).
@@ -269,7 +271,6 @@ Window {
 - `highlight: Component` - Custom highlight component
 - `background: Component` - Custom background component
 - `font: font` - Font for text rendering (used for default delegates)
-- `locale: Locale` - Locale for localization
 
 **Signals:**
 - `activated(int index)` - Emitted when user selects an item
@@ -305,6 +306,7 @@ Window {
 - `delegate: Component` - Custom delegate
 - `background: Component` - Custom background
 - `highlight: Component` - Custom highlight
+- `locale: Locale` - Locale for month names (defaults to system locale)
 
 ### DayPicker
 

@@ -15,6 +15,49 @@ qt_add_executable(${PROJECT_NAME}
     resources.qrc
 )
 
+
+target_link_libraries(${PROJECT_NAME} PRIVATE
+    Qt6::Core
+    Qt6::Gui
+    Qt6::Quick
+    Qt6::Qml
+    Gaiplugin
+)
+
+set_target_properties(${PROJECT_NAME} PROPERTIES
+    CXX_STANDARD 17
+    CXX_STANDARD_REQUIRED ON
+)
+
+project(Neon LANGUAGES CXX)
+
+qt_add_executable(${PROJECT_NAME}
+    src/neon.cpp
+    resources.qrc
+)
+
+
+target_link_libraries(${PROJECT_NAME} PRIVATE
+    Qt6::Core
+    Qt6::Gui
+    Qt6::Quick
+    Qt6::Qml
+    Gaiplugin
+)
+
+set_target_properties(${PROJECT_NAME} PROPERTIES
+    CXX_STANDARD 17
+    CXX_STANDARD_REQUIRED ON
+)
+
+project(themes LANGUAGES CXX)
+
+qt_add_executable(${PROJECT_NAME}
+    src/themes.cpp
+    resources.qrc
+)
+
+
 target_link_libraries(${PROJECT_NAME} PRIVATE
     Qt6::Core
     Qt6::Gui
