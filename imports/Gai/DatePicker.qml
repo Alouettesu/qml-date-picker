@@ -162,9 +162,19 @@ Item {
             anchors.bottom: parent.bottom
             font: datePicker.font
             locale: datePicker.locale
-            highlight:  datePicker._highlightYear  !== null ? datePicker._highlightYear  : null
-            background: datePicker.background      ?? undefined
-            delegate:   datePicker.delegate        ?? undefined
+            Binding {
+                yearPicker.highlight: datePicker.highlight
+                when: !!datePicker.background
+            }
+            Binding {
+                yearPicker.background: datePicker.background
+                when: !!datePicker.background
+            }
+            Binding {
+                yearPicker.delegate: datePicker.delegate
+                when: !!datePicker.delegate
+            }
+
             onActivated: {
                 datePicker._userChanging = true
                 datePicker._updatePickerRanges()
@@ -179,9 +189,18 @@ Item {
             anchors.bottom: parent.bottom
             font: datePicker.font
             locale: datePicker.locale
-            highlight:  datePicker._highlightMonth !== null ? datePicker._highlightMonth : null
-            background: datePicker.background      ?? undefined
-            delegate:   datePicker.delegate        ?? undefined
+            Binding {
+                monthPicker.highlight: datePicker.highlight
+                when: !!datePicker.background
+            }
+            Binding {
+                monthPicker.background: datePicker.background
+                when: !!datePicker.background
+            }
+            Binding {
+                monthPicker.delegate: datePicker.delegate
+                when: !!datePicker.delegate
+            }
             onActivated: {
                 datePicker._userChanging = true
                 datePicker._updatePickerRanges()
@@ -196,9 +215,18 @@ Item {
             anchors.bottom: parent.bottom
             font: datePicker.font
             locale: datePicker.locale
-            highlight:  datePicker._highlightDay   !== null ? datePicker._highlightDay : null
-            background: datePicker.background      ?? undefined
-            delegate:   datePicker.delegate        ?? undefined
+            Binding {
+                dayPicker.highlight: datePicker.highlight
+                when: !!datePicker.background
+            }
+            Binding {
+                dayPicker.background: datePicker.background
+                when: !!datePicker.background
+            }
+            Binding {
+                dayPicker.delegate: datePicker.delegate
+                when: !!datePicker.delegate
+            }
             onActivated: {
                 datePicker._userChanging = true
                 datePicker._commitFromPickers()
