@@ -58,10 +58,10 @@ Main component combining year, month, and day pickers.
 ```qml
 DatePicker {
     selectedDate: new Date(2026, 5, 15)
-    dateRange: {
+    dateRange: ({
         begin: new Date(2020, 0, 1),
         end: new Date(2030, 11, 31)
-    }
+    })
 }
 ```
 
@@ -71,7 +71,7 @@ Standalone year selection component.
 ```qml
 YearPicker {
     currentYear: 2026
-    range: { from: 2020, to: 2030 }
+    range: ({ from: 2020, to: 2030 })
 }
 ```
 
@@ -81,7 +81,7 @@ Standalone month selection component.
 ```qml
 MonthPicker {
     currentMonth: 5
-    range: { from: 0, to: 11 }
+    range: ({ from: 0, to: 11 })
 }
 ```
 
@@ -91,7 +91,7 @@ Standalone day selection component.
 ```qml
 DayPicker {
     currentDay: 15
-    range: { from: 1, to: 31 }
+    range: ({ from: 1, to: 31 })
 }
 ```
 

@@ -109,10 +109,10 @@ Window {
         anchors.centerIn: parent
         
         selectedDate: new Date(2026, 5, 15)
-        dateRange: {
+        dateRange: ({
             begin: new Date(2020, 0, 1),
             end: new Date(2030, 11, 31)
-        }
+        })
         
         onActivated: (selected) => {
             console.log("Selected date:", selected)
@@ -232,10 +232,10 @@ Window {
         anchors.centerIn: parent
         
         selectedDate: new Date(2026, 5, 15)
-        dateRange: {
+        dateRange: ({
             begin: new Date(2020, 0, 1),
             end: new Date(2030, 11, 31)
-        }
+        })
         
         delegate: Text {
             anchors.centerIn: parent

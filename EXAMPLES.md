@@ -63,10 +63,10 @@ Window {
         anchors.centerIn: parent
         
         selectedDate: new Date(2026, 5, 15)
-        dateRange: {
+        dateRange: ({
             begin: new Date(2020, 0, 1),
             end: new Date(2030, 11, 31)
-        }
+        })
     }
 }
 ```
@@ -419,7 +419,7 @@ Window {
     YearPicker {
         anchors.centerIn: parent
         currentYear: 2026
-        range: { from: 2020, to: 2030 }
+        range: ({ from: 2020, to: 2030 })
     }
 }
 ```
@@ -442,7 +442,7 @@ Window {
     MonthPicker {
         anchors.centerIn: parent
         currentMonth: 5  // June (0-indexed)
-        range: { from: 0, to: 11 }
+        range: ({ from: 0, to: 11 })
     }
 }
 ```
@@ -465,7 +465,7 @@ Window {
     DayPicker {
         anchors.centerIn: parent
         currentDay: 15
-        range: { from: 1, to: 31 }
+        range: ({ from: 1, to: 31 })
     }
 }
 ```
@@ -503,10 +503,10 @@ Window {
             DatePicker {
                 id: startDatePicker
                 selectedDate: new Date(2026, 0, 1)
-                dateRange: {
+                dateRange: ({
                     begin: new Date(2020, 0, 1),
                     end: new Date(2030, 11, 31)
-                }
+                })
             }
         }
 
@@ -522,10 +522,10 @@ Window {
             DatePicker {
                 id: endDatePicker
                 selectedDate: new Date(2026, 11, 31)
-                dateRange: {
+                dateRange: ({
                     begin: new Date(2020, 0, 1),
                     end: new Date(2030, 11, 31)
-                }
+                })
             }
         }
     }
@@ -596,30 +596,30 @@ Window {
             Button {
                 text: "2020-2025"
                 onClicked: {
-                    datePicker.dateRange = {
+                    datePicker.dateRange = ({
                         begin: new Date(2020, 0, 1),
                         end: new Date(2025, 11, 31)
-                    }
+                    })
                 }
             }
 
             Button {
                 text: "2025-2030"
                 onClicked: {
-                    datePicker.dateRange = {
+                    datePicker.dateRange = ({
                         begin: new Date(2025, 0, 1),
                         end: new Date(2030, 11, 31)
-                    }
+                    })
                 }
             }
 
             Button {
                 text: "2020-2030"
                 onClicked: {
-                    datePicker.dateRange = {
+                    datePicker.dateRange = ({
                         begin: new Date(2020, 0, 1),
                         end: new Date(2030, 11, 31)
-                    }
+                    })
                 }
             }
         }
@@ -627,10 +627,10 @@ Window {
         DatePicker {
             id: datePicker
             selectedDate: new Date(2026, 5, 15)
-            dateRange: {
+            dateRange: ({
                 begin: new Date(2020, 0, 1),
                 end: new Date(2030, 11, 31)
-            }
+            })
         }
     }
 }
@@ -655,10 +655,10 @@ Window {
         anchors.centerIn: parent
         
         selectedDate: new Date(2026, 5, 15)
-        dateRange: {
+        dateRange: ({
             begin: new Date(2020, 0, 1),
             end: new Date(2030, 11, 31)
-        }
+        })
         
         delegate: Text {
             anchors.centerIn: parent
@@ -691,10 +691,10 @@ Window {
         anchors.centerIn: parent
         
         selectedDate: new Date(2026, 5, 15)
-        dateRange: {
+        dateRange: ({
             begin: new Date(2020, 0, 1),
             end: new Date(2030, 11, 31)
-        }
+        })
         
         background: Rectangle {
             color: "#fafafa"
@@ -725,10 +725,10 @@ Window {
         anchors.centerIn: parent
         
         selectedDate: new Date(2026, 5, 15)
-        dateRange: {
+        dateRange: ({
             begin: new Date(2020, 0, 1),
             end: new Date(2030, 11, 31)
-        }
+        })
         
         highlight: Rectangle {
             color: "#fff3e0"
@@ -759,10 +759,10 @@ Window {
         anchors.centerIn: parent
         
         selectedDate: new Date(2026, 5, 15)
-        dateRange: {
+        dateRange: ({
             begin: new Date(2020, 0, 1),
             end: new Date(2030, 11, 31)
-        }
+        })
         
         highlightYear: Rectangle {
             color: "#e3f2fd"
@@ -807,10 +807,10 @@ Window {
         anchors.centerIn: parent
         
         selectedDate: new Date(2026, 5, 15)
-        dateRange: {
+        dateRange: ({
             begin: new Date(2020, 0, 1),
             end: new Date(2030, 11, 31)
-        }
+        })
         
         delegate: Text {
             anchors.centerIn: parent
@@ -946,10 +946,10 @@ Window {
                 DatePicker {
                     id: fromDatePicker
                     selectedDate: new Date(2026, 0, 1)
-                    dateRange: {
+                    dateRange: ({
                         begin: new Date(2020, 0, 1),
                         end: new Date(2030, 11, 31)
-                    }
+                    })
                 }
             }
 
@@ -965,10 +965,10 @@ Window {
                 DatePicker {
                     id: toDatePicker
                     selectedDate: new Date(2026, 11, 31)
-                    dateRange: {
+                    dateRange: ({
                         begin: new Date(2020, 0, 1),
                         end: new Date(2030, 11, 31)
-                    }
+                    })
                 }
             }
         }
@@ -1055,7 +1055,7 @@ Window {
 ### 1. Always Set Valid Date Ranges
 
 ```qml
-// Good: begin < end
+// Good: begin <= end
 dateRange: {
     begin: new Date(2020, 0, 1),
     end: new Date(2030, 11, 31)
@@ -1073,11 +1073,12 @@ dateRange: {
 ```qml
 DatePicker {
     selectedDate: new Date(2026, 5, 15)
-    dateRange: {
+    dateRange: ({
         begin: new Date(2020, 0, 1),
         end: new Date(2030, 11, 31)
-    }
+    })
     // selectedDate is within range ✓
+    // If selectedDate is outside range, it will be clamped to the nearest valid date
 }
 ```
 
