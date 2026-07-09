@@ -10,6 +10,7 @@ cmake-build-*/
 *.qmlproject.user
 *.qmlproject.user.*
 *.qtds
+.qmlls.ini
 
 # IDE
 .vscode/
